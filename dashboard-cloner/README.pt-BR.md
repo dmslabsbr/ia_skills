@@ -13,7 +13,7 @@ Para usar esta skill em um projeto específico:
 2. Crie o diretório `.agents/skills`.
 3. Crie um link simbólico:
    ```bash
-   ln -s /Users/dms/Documents/skills-claude/dashboard-cloner $(pwd)/.agents/skills/dashboard-cloner
+   ln -s /Users/dms/Documents/source/ia_skills/dashboard-cloner $(pwd)/.agents/skills/dashboard-cloner
    ```
 
 ### 2. Instruções de Uso
@@ -25,4 +25,4 @@ Basta fornecer um screenshot de um dashboard ou UI e dizer:
 A IA entregará um documento **JSONC** estruturado e um prompt final focado no desenvolvedor (**Developer Brief**).
 
 ## 🛠️ Manutenção
-Modifique os arquivos em `/Users/dms/Documents/skills-claude/dashboard-cloner` para refletir melhorias na lógica de análise ou no formato da saída.
+Modifique os arquivos em `/Users/dms/Documents/source/ia_skills/dashboard-cloner` para refletir melhorias na lógica de análise ou no formato da saída.

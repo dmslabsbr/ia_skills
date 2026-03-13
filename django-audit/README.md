@@ -16,7 +16,7 @@ To make Antigravity recognize this skill in a new Django project:
    ```
 3. Create a symbolic link to this folder (recommended for keeping it updated):
    ```bash
-   ln -s /Users/dms/Documents/skills-claude/django-audit $(pwd)/.agents/skills/django-audit
+   ln -s /Users/dms/Documents/source/ia_skills/django-audit $(pwd)/.agents/skills/django-audit
    ```
 4. Antigravity will now list `django-audit` when running in your project.
 

@@ -1,0 +1,14 @@
+services:
+  skills-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skills-mcp
+    restart: unless-stopped
+    volumes:
+      # Map your host skills directory to the container to allow live updates
+      - .:/app/skills-claude
+    # stdio MCP servers usually run via 'docker run -i', 
+    # but for use with Cursor/Antigravity, you'll point to the docker command directly.
+    stdin_open: true
+    tty: true

@@ -1,39 +1,39 @@
-# Django Technical Audit - Guide & Installation
+# Django Technical Audit - Guia de Uso e Instalação
 
-[Português (Portuguese)](./README.pt-BR.md)
+[English](./README.md)
 
-This directory contains a Skill for technical auditing of Django projects.
+Este diretório contém uma Skill para auditoria técnica de projetos Django.
 
-## 🚀 How to use in new projects
+## 🚀 Como usar em novos projetos
 
-### 1. In Antigravity (Claude Code / Gemini CLI)
-To make Antigravity recognize this skill in a new Django project:
+### 1. No Antigravity (Claude Code / Gemini CLI)
+Para que o Antigravity reconheça esta skill em um novo projeto Django:
 
-1. Go to the root of your new project.
-2. Create the necessary folder structure:
+1. Vá para a raiz do seu novo projeto.
+2. Crie a estrutura de pastas necessária:
    ```bash
    mkdir -p .agents/skills
    ```
-3. Create a symbolic link to this folder (recommended for keeping it updated):
+3. Crie um link simbólico para esta pasta (recomendado para manter atualizado):
    ```bash
-   ln -s /Users/dms/Documents/skills-claude/django-audit $(pwd)/.agents/skills/django-audit
+   ln -s /Users/dms/Documents/source/ia_skills/django-audit $(pwd)/.agents/skills/django-audit
    ```
-4. Antigravity will now list `django-audit` when running in your project.
+4. O Antigravity passará a listar `django-audit` ao rodar em seu projeto.
 
 ---
 
-### 2. In Cursor (IDE)
-Cursor uses the `.cursorrules` file to define global behaviors.
+### 2. No Cursor (IDE)
+O Cursor utiliza o arquivo `.cursorrules` para definir comportamentos globais.
 
-1. In the root of your project in Cursor, create or open the `.cursorrules` file.
-2. Copy and paste the content of the `SKILL.md` file (from this directory) into your `.cursorrules`.
-3. Ensure the `scripts/audit_check.py` script is also available in the project if you wish to run automatic checks.
+1. Na raiz do seu projeto no Cursor, crie ou abra o arquivo `.cursorrules`.
+2. Copie e cole o conteúdo do arquivo `SKILL.md` (deste diretório) para dentro do seu `.cursorrules`.
+3. Certifique-se de que o script `scripts/audit_check.py` também esteja disponível no projeto se desejar rodar as verificações automáticas.
 
 ---
 
-### 3. Requirements
-- **Python 3.13+** (recommended via Homebrew).
-- Audit tools (automatically installed by the script on first use within `.audit_venv`).
+### 3. Requisitos
+- **Python 3.13+** (recomendado via Homebrew).
+- Ferramentas de auditoria (instaladas automaticamente pelo script no primeiro uso dentro do `.audit_venv`).
 
-## 🛠️ Maintenance
-To update the audit script or rules, modify the files directly in this folder `/Users/dms/Documents/skills-claude/django-audit`. All projects using the symbolic link will be updated simultaneously.
+## 🛠️ Manutenção
+Para atualizar o script de auditoria ou regras, modifique os arquivos diretamente nesta pasta `/Users/dms/Documents/source/ia_skills/django-audit`. Todos os projetos que usarem o link simbólico serão atualizados simultaneamente.
