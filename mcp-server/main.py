@@ -5,7 +5,8 @@ from mcp.server.fastmcp import FastMCP
 from pydantic import BaseModel, Field
 
 # Initialize FastMCP server
-mcp = FastMCP("skills_mcp")
+# host and port are configured here for SSE transport
+mcp = FastMCP("skills_mcp", host="0.0.0.0", port=8001)
 
 # Path to the skills repository
 SKILLS_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,6 +20,7 @@ class SkillIdentifier(BaseModel):
 )
 async def list_available_skills() -> str:
     """Lists all skills installed in the skills-claude repository."""
+    print("[MCP] 🛠️  Tool called: list_available_skills", flush=True)
     skills = []
     # Skip directories like .git, mcp-server, etc.
     skip_dirs = {".git", ".gemini", "mcp-server", "brain", ".agents", "node_modules"}
@@ -38,6 +40,8 @@ async def list_available_skills() -> str:
 )
 async def get_skill_manual(params: SkillIdentifier) -> str:
     """Retrieves the full instructions (SKILL.md) and documentation for a specific skill."""
+    print(f"[MCP] 🛠️  Tool called: get_skill_manual | requested skill: {params.skill_name}", flush=True)
+    
     skill_dir = os.path.join(SKILLS_ROOT, params.skill_name)
     
     if not os.path.exists(skill_dir):
@@ -65,6 +69,8 @@ async def get_skill_manual(params: SkillIdentifier) -> str:
 @mcp.resource("skill://{skill_name}/instructions")
 def skill_instructions(skill_name: str) -> str:
     """Provides direct resource access to a skill's SKILL.md content."""
+    print(f"[MCP] 📖 Resource accessed: skill_instructions | requested skill: {skill_name}", flush=True)
+    
     path = os.path.join(SKILLS_ROOT, skill_name, "SKILL.md")
     if os.path.exists(path):
         with open(path, "r") as f:
@@ -72,5 +78,4 @@ def skill_instructions(skill_name: str) -> str:
     return "Skill not found."
 
 if __name__ == "__main__":
-    # In older/some versions of FastMCP, host is not supported explicitly in run(), it listens on 0.0.0.0 by default or through its own uvicorn arguments.
-    mcp.run(transport="sse", port=8001)
+    mcp.run(transport="sse")

@@ -1,58 +1,44 @@
 # AI Coding Skills 🚀
 
-Welcome to the collection of specialized skills for modern AI coding assistants. These skills are designed to enhance the capabilities of tools like **Antigravity**, **Cursor**, and **Claude Code**, providing them with expert-level knowledge and structured workflows.
+![Cursor Skill](https://img.shields.io/badge/Cursor-Skill-00d4aa?style=flat) ![Claude Code](https://img.shields.io/badge/Claude-Code-d97757?style=flat) ![MCP Server](https://img.shields.io/badge/MCP-Server-4285F4?style=flat) ![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=flat)
 
-## 🛠️ Integrated Tools
+Read in Portuguese: [README.pt-BR.md](README.pt-BR.md)
 
-This repository is optimized for:
-
-- **Antigravity**: These skills follow the official `SKILL.md` specification. Antigravity can automatically discover and use these skills to perform complex tasks with high precision.
-- **Cursor**: You can use these files as references in your "Chat" or "Composer" sessions, or integrate them into your `.cursorrules` to define persistent project behavior.
-- **Claude Code**: Use these files as context or copy the content into your project instructions to guide Claude's behavior during deep technical tasks.
-
----
+A curated collection of specialized skills designed to enhance modern AI coding assistants like Antigravity, Cursor, and Claude Code. This repository provides expert-level workflows, system prompts, and a global Model Context Protocol (MCP) server to instantly expand your agent's technical capabilities across any project.
 
 ## 📂 Available Skills
 
-### 🐍 Django Audit
-**Complete technical audit for Django applications.**
-- **Focus**: Security (vulnerabilities), Architecture (best practices), Performance (N+1 queries), and Code Quality.
-- **Output**: Detailed reports with severity levels and actionable fix plans.
-- **Location**: [`/django-audit`](./django-audit)
+- **[📱 Android Expert](./android-expert)**: Best practices for Android development with Java/Kotlin, Material Design, Firebase, and Google Play Store publishing guidelines.
+- **[✅ Code Review Standards](./code-review-standards)**: Quality, security, and project standards reviews encompassing PEP 8, type hints, Docker, and comprehensive testing.
+- **[🎨 Dashboard Cloner](./dashboard-cloner)**: UI/UX analysis from visual references to extract design tokens, layouts, and responsive behavior into a Developer Brief.
+- **[🐍 Django Audit](./django-audit)**: Deep technical auditing for Django applications focusing on security, architecture, performance, and code quality.
+- **[🐙 Git Platforms Expert](./git-platforms-expert)**: Workflow master for GitHub/GitLab, branch strategies, CI/CD pipelines, and semantic commit message generation.
+- **[🏗️ New App Bootstrap](./new-app-bootstrap)**: Rapid scaffolding for new applications including README, VERSION, dependencies, Docker, ER diagrams, and test setups.
+- **[📋 Phase Execution](./phase-execution)**: Structured project delivery methodology via five distinct phases (analysis, planning, implementation, validation, delivery) with checklists.
+- **[🌍 README Bilingual](./readme-bilingual)**: Automated creation and maintenance of dual-language GitHub documentation.
+- **[📝 Technical Documentation](./technical-documentation)**: Creation and maintenance of `analise.md` and `plano.md` for structured technical discussions and implementation planning.
+- **[🔄 Update Funcoes.md](./update-funcoes-md)**: Automated documentation maintenance tracking when project functions are created, updated, or removed in `funcoes.md`.
 
-### 🎨 Dashboard Cloner
-**Deep UI/UX analysis from visual references.**
-- **Focus**: Extracting design tokens, layout structures, typography, and responsive behavior.
-- **Output**: Structured JSONC analysis and a high-fidelity Developer Brief.
-- **Location**: [`/dashboard-cloner`](./dashboard-cloner)
+## 🚀 Installation & Usage
 
----
+### 1. The Global MCP Server (Recommended)
+The most powerful way to use these skills is by running the included MCP server. This grants your AI agents instant access to all skills globally, without copying files.
 
-## 🚀 How to Use
-
-### In Antigravity
-Antigravity automatically detects skills in the workspace. Simply ask the AI to perform an action related to the skill (e.g., *"Perform a security audit on my Django app"*), and it will use the defined patterns.
-
-### In Cursor
-1. Press `Cmd+K` or `Cmd+L`.
-2. Reference the skill file using `@SKILL.md` (e.g., `@django-audit/SKILL.md`).
-3. Instruct Cursor: *"Use the instructions in this file to analyze my code."*
-
-### In Claude Code
-Add the skill to your context or project prompt:
+**Via Docker:**
 ```bash
-claude "Analyze my Django project using the patterns in /path/to/django-audit/SKILL.md"
+docker-compose up -d --build
+```
+*Then, add the SSE client to your IDE (Cursor/Antigravity) pointing to `http://localhost:8001/sse`.*
+
+### 2. Local Project Setup (Symlinks)
+If you prefer adding skills individually per project:
+```bash
+mkdir -p .agents/skills
+ln -s /path/to/ia_skills/django-audit $(pwd)/.agents/skills/django-audit
 ```
 
----
+### 3. Cursor Rules
+For ad-hoc usage in Cursor, just mention the skill file in your prompt (e.g., `@django-audit/SKILL.md`) or copy its contents into your `.cursorrules`.
 
-## 🌐 Language Support
-
-All skills are available in both **English** and **Portuguese (pt-BR)**. The AI will automatically respond in the language you use.
-
-- Documentation: `README.md` / `README.pt-BR.md`
-- Skill Definitions: `SKILL.md` / `SKILL.pt-BR.md`
-
----
-
-*Curated with ❤️ for the AI coding community.*
+## 🤝 Contributing
+Feel free to add new AI skills or improve existing ones. Ensure your contributions include both `SKILL.md` (English) and `SKILL.pt-BR.md` (Portuguese) formats.
