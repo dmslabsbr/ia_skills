@@ -72,4 +72,5 @@ def skill_instructions(skill_name: str) -> str:
     return "Skill not found."
 
 if __name__ == "__main__":
-    mcp.run()
+    # In older/some versions of FastMCP, host is not supported explicitly in run(), it listens on 0.0.0.0 by default or through its own uvicorn arguments.
+    mcp.run(transport="sse", port=8001)

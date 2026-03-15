@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install
-COPY requirements.txt .
+COPY mcp-server/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire skills repository (MCP server + all skills)
@@ -24,6 +24,8 @@ WORKDIR /app/ia_skills/mcp-server
 # Ensure the script can find the skills directory relative to itself
 ENV PYTHONUNBUFFERED=1
 
+EXPOSE 8001
+
 # Run the MCP server
-# Note: stdio transport is the default, which is what Cursor/Antigravity expect
+# Note: SSE transport via uvicorn
 ENTRYPOINT ["python", "main.py"]
