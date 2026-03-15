@@ -11,8 +11,23 @@ mcp = FastMCP("skills_mcp", host="0.0.0.0", port=8001)
 # Path to the skills repository
 SKILLS_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-class SkillIdentifier(BaseModel):
-    skill_name: str = Field(..., description="The directory name of the skill (e.g., 'django-audit')")
+# --- PROMPTS (Atalhos de comando) ---
+
+@mcp.prompt("analisar-skills-disponiveis")
+def analisar_skills() -> str:
+    """Cria um guia rápido das habilidades instaladas e sugere as melhores para o projeto."""
+    return """Por favor, execute os seguintes passos:
+1. Use a ferramenta 'list_available_skills' para ver o que temos no repositório.
+2. Com base no código que estamos editando neste projeto do Cursor, identifique quais 2 ou 3 skills seriam mais úteis agora.
+3. Para essas selecionadas, use 'get_skill_manual' para ler o SKILL.md delas.
+4. Faça um resumo curto de como cada uma pode me ajudar neste arquivo específico."""
+
+# --- TOOLS (Ações dinâmicas) ---
+
+
+#class SkillIdentifier(BaseModel):
+#    skill_name: str = Field(..., description="The directory name of the skill (e.g., 'django-audit')")
+#
 
 @mcp.tool(
     name="list_available_skills",
@@ -38,17 +53,19 @@ async def list_available_skills() -> str:
     name="get_skill_manual",
     annotations={"readOnlyHint": True}
 )
-async def get_skill_manual(params: SkillIdentifier) -> str:
+async def get_skill_manual(
+    skill_name: str = Field(..., description="Skill folder name (ex: 'django-audit') to retrieve the SKILL manual")
+) -> str:
     """Retrieves the full instructions (SKILL.md) and documentation for a specific skill."""
-    print(f"[MCP] 🛠️  Tool called: get_skill_manual | requested skill: {params.skill_name}", flush=True)
+    print(f"[MCP] 🛠️  Tool called: get_skill_manual | requested skill: {skill_name}", flush=True)
     
-    skill_dir = os.path.join(SKILLS_ROOT, params.skill_name)
+    skill_dir = os.path.join(SKILLS_ROOT, skill_name)
     
     if not os.path.exists(skill_dir):
-        return f"Error: Skill '{params.skill_name}' not found."
+        return f"Error: Skill '{skill_name}' not found."
     
     response = {
-        "name": params.skill_name,
+        "name": skill_name,
         "content": {}
     }
     
@@ -78,4 +95,4 @@ def skill_instructions(skill_name: str) -> str:
     return "Skill not found."
 
 if __name__ == "__main__":
-    mcp.run(transport="sse")
+    mcp.run()
