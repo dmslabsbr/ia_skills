@@ -10,6 +10,23 @@ mcp = FastMCP("skills_mcp", host="0.0.0.0", port=8001)
 
 # Path to the skills repository
 SKILLS_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SKILLS_ROOT_RESOLVED = os.path.realpath(SKILLS_ROOT)
+
+
+def _resolve_skill_dir(skill_name: str) -> str | None:
+    """
+    Resolve skill directory path and ensure it stays inside SKILLS_ROOT (path traversal safe).
+    Returns the resolved absolute path if valid, None otherwise.
+    """
+    if not skill_name or skill_name.strip() != skill_name:
+        return None
+    # Avoid path traversal: join then resolve and ensure under SKILLS_ROOT
+    candidate = os.path.join(SKILLS_ROOT, skill_name)
+    resolved = os.path.realpath(candidate)
+    if not resolved.startswith(SKILLS_ROOT_RESOLVED + os.sep) and resolved != SKILLS_ROOT_RESOLVED:
+        return None
+    return resolved
+
 
 # --- PROMPTS (Atalhos de comando) ---
 
@@ -59,9 +76,8 @@ async def get_skill_manual(
     """Retrieves the full instructions (SKILL.md) and documentation for a specific skill."""
     print(f"[MCP] 🛠️  Tool called: get_skill_manual | requested skill: {skill_name}", flush=True)
     
-    skill_dir = os.path.join(SKILLS_ROOT, skill_name)
-    
-    if not os.path.exists(skill_dir):
+    skill_dir = _resolve_skill_dir(skill_name)
+    if skill_dir is None or not os.path.isdir(skill_dir):
         return f"Error: Skill '{skill_name}' not found."
     
     response = {
@@ -72,13 +88,13 @@ async def get_skill_manual(
     # Read SKILL.md
     skill_md_path = os.path.join(skill_dir, "SKILL.md")
     if os.path.exists(skill_md_path):
-        with open(skill_md_path, "r") as f:
+        with open(skill_md_path, "r", encoding="utf-8") as f:
             response["content"]["SKILL.md"] = f.read()
             
     # Read README.md if exists
     readme_path = os.path.join(skill_dir, "README.md")
     if os.path.exists(readme_path):
-        with open(readme_path, "r") as f:
+        with open(readme_path, "r", encoding="utf-8") as f:
             response["content"]["README.md"] = f.read()
 
     return json.dumps(response, indent=2)
@@ -88,11 +104,15 @@ def skill_instructions(skill_name: str) -> str:
     """Provides direct resource access to a skill's SKILL.md content."""
     print(f"[MCP] 📖 Resource accessed: skill_instructions | requested skill: {skill_name}", flush=True)
     
-    path = os.path.join(SKILLS_ROOT, skill_name, "SKILL.md")
+    skill_dir = _resolve_skill_dir(skill_name)
+    if skill_dir is None or not os.path.isdir(skill_dir):
+        return "Skill not found."
+    path = os.path.join(skill_dir, "SKILL.md")
     if os.path.exists(path):
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             return f.read()
     return "Skill not found."
 
 if __name__ == "__main__":
-    mcp.run()
+    # mcp.run()
+    mcp.run(transport="sse")

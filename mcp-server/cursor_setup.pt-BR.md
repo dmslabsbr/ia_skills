@@ -5,24 +5,51 @@ O Cursor pode usar estas habilidades via **MCP (SSE ou Comando Direto)** ou loca
 ## 1. Configuração Global (via MCP) - Recomendado 🚀
 
 ### Passo 1: Adicionar Servidor
+
+A configuração do servidor MCP pode ser feita **pela interface** ou **pelo arquivo `mcp.json`**.
+
+#### Opção A: Arquivo de configuração (`mcp.json`)
+
+Crie ou edite o arquivo de configuração MCP:
+
+- **Windows**: `%USERPROFILE%\.cursor\mcp.json`
+- **macOS / Linux**: `~/.cursor\mcp.json`
+
+Exemplo para servidor remoto (HTTP/SSE):
+
+```json
+{
+  "mcpServers": {
+    "is-skills-mcp-server": {
+      "url": "http://10.234.10.87:8001/sse"
+    }
+  }
+}
+```
+
+Substitua a URL pelo endereço do seu servidor (host e porta onde o MCP está rodando). Reinicie o Cursor ou recarregue a janela após alterar o `mcp.json`.
+
+#### Opção B: Interface de configurações do Cursor
+
 1. Abra as Configurações do Cursor (**Settings > Cursor Settings > Features > MCP**).
 2. Clique em **+ Add New MCP Server**.
 
 ![Configurações de MCP no Cursor](../images/Cursor%20Tools_MCP.png)
 
-**Para Execução Local Python:**
-- **Nome**: `ia-skills`
+**Para execução local em Python:**
+- **Nome**: `ia-skills` (ou outro de sua preferência)
 - **Tipo**: `command`
-- **Comando**: `/Users/dms/Documents/source/ia_skills/mcp-server/.venv/bin/python /Users/dms/Documents/source/ia_skills/mcp-server/main.py`
+- **Comando**: `python caminho/para/ia_skills/mcp-server/main.py` (use o Python do venv e o caminho completo)
 
-**Para OrbStack/Docker (SSE):**
-- **Nome**: `ia-skills`
+**Para servidor remoto / Docker (SSE):**
+- **Nome**: `is-skills-mcp-server` (ou outro nome)
 - **Tipo**: `SSE`
-- **URL**: `http://skills-mcp.ia-skills.orb.local/sse`
+- **URL**: `http://<host>:8001/sse` (ex.: `http://10.234.10.87:8001/sse` ou `http://skills-mcp.ia-skills.orb.local/sse`)
 
 ### Passo 2: Uso
+
 No Chat (Cmd+L) ou Composer (Cmd+I), use o símbolo `@`:
-- Digite `@ia-skills` para ver os métodos disponíveis do servidor.
+- Digite `@is-skills-mcp-server` (ou o nome que você configurou) para ver as ferramentas disponíveis.
 - Use a ferramenta `list_available_skills` para navegar pelas habilidades do repositório.
 - Use `get_skill_manual` para carregar as instruções de uma habilidade específica.
 
