@@ -25,6 +25,12 @@ Você pode usar estas skills de duas formas:
 
 ### 1. Global (MCP) - Recomendado
 Rodar o servidor MCP incluso garante acesso instantâneo e global a todas as skills.
+
+**Rodar o servidor:**
+- **Windows (local)**: Na raiz do repositório, execute `run-server.bat` para subir o servidor com Python (escuta em `http://localhost:8001/sse`).
+- **Linux (Docker)**: Na raiz do repositório, execute `./run-docker.sh` para buildar e subir o container (execute `chmod +x run-docker.sh` uma vez se necessário).
+
+**Configurar o cliente:**
 - **Setup no Antigravity**: [English](./mcp-server/antigravity_setup.md) | [Português](./mcp-server/antigravity_setup.pt-BR.md)
 - **Setup no Cursor**: [English](./mcp-server/cursor_setup.md) | [Português](./mcp-server/cursor_setup.pt-BR.md)
 
@@ -33,4 +39,4 @@ Se preferir adicionar skills individualmente por projeto:
 - **Pastas**: Copie a pasta da skill para `.agents/skills/` (para o Antigravity).
 - **Regras**: Copie o conteúdo para `.cursorrules` (para o Cursor).
 
-Para detalhes sobre a implementação do servidor, veja o [README do mcp-server](./mcp-server/README.md).
+Para detalhes sobre a implementação do servidor e opções de execução, veja o [README do mcp-server](./mcp-server/README.md).

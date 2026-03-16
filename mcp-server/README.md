@@ -6,6 +6,20 @@ This server exposes all skills in the `ia_skills` repository as MCP tools and re
 - `list_available_skills`: Lists all skills in the repository.
 - `get_skill_manual`: Returns the full content of `SKILL.md` and `README.md` for a specific skill.
 
+## 🏃 Running the server
+
+All commands below assume you are in the **repository root** (`ia_skills/`).
+
+| Platform | How to run |
+|----------|------------|
+| **Windows (local)** | Double-click or run `run-server.bat`. Uses `.venv` or `mcp-server\.venv` if present. |
+| **Linux / macOS (Docker)** | `chmod +x run-docker.sh` then `./run-docker.sh`. Uses `docker compose` (or `docker-compose`). |
+
+The server listens on **http://0.0.0.0:8001**; the MCP SSE endpoint is **http://&lt;host&gt;:8001/sse**.
+
+- **Local Python**: Install deps with `pip install -r mcp-server/requirements.txt` (recommended: use a venv in repo root or in `mcp-server/`).
+- **Docker**: See `docker-compose.yml` and `Dockerfile` in the repo root.
+
 ## 🚀 Configuration
 
 ### 1. Antigravity (Gemini Code Assistant)
@@ -58,17 +72,19 @@ To use these skills in Cursor, go to **Settings > Cursor Settings > Features > M
 
 ---
 
-### 3. Using Docker (Clean)
-You can run the MCP server via Docker to keep your local machine clean.
+### 3. Using Docker
+From the **repo root**, run the provided script or docker compose directly:
 
-1. **Build the image**:
-   ```bash
-   docker build -t skills-mcp /Users/dms/Documents/source/ia_skills/mcp-server/
-   ```
+```bash
+./run-docker.sh
+```
 
-2. **Run Configuration**:
-   - **Command**: `docker`
-   - **Args**: `run -i --rm -v /Users/dms/Documents/source/ia_skills:/app/ia_skills skills-mcp`
+Or manually:
+```bash
+docker compose up -d --build
+```
+
+The container name is `skills-mcp`; logs: `docker compose logs -f skills-mcp`. The repo is mounted into the container so skill changes are reflected without rebuilding.
 
 ---
 

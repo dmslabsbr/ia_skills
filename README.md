@@ -25,6 +25,12 @@ You can use these skills in two ways:
 
 ### 1. Global (MCP) - Recommended
 Running the included MCP server grants your AI agents instant access to all skills across any project.
+
+**Run the server:**
+- **Windows (local)**: From the repo root, run `run-server.bat` to start the server with Python (listens on `http://localhost:8001/sse`).
+- **Linux (Docker)**: From the repo root, run `./run-docker.sh` to build and start the container (requires `chmod +x run-docker.sh` once).
+
+**Configure your client:**
 - **Setup Antigravity**: [English](./mcp-server/antigravity_setup.md) | [Português](./mcp-server/antigravity_setup.pt-BR.md)
 - **Setup Cursor**: [English](./mcp-server/cursor_setup.md) | [Português](./mcp-server/cursor_setup.pt-BR.md)
 
@@ -33,4 +39,4 @@ If you prefer adding skills individually per project:
 - **Folders**: Copy the skill folder into `.agents/skills/` (for Antigravity).
 - **Rules**: Copy content into `.cursorrules` (for Cursor).
 
-For more details on the server implementation, check the [MCP Server README](./mcp-server/README.md).
+For more details on the server implementation and run options, check the [MCP Server README](./mcp-server/README.md).
