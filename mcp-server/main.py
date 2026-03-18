@@ -18,6 +18,7 @@ mcp = FastMCP("skills_mcp", host="0.0.0.0", port=8001)
 # Path to the skills repository
 SKILLS_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKILLS_ROOT_RESOLVED = os.path.realpath(SKILLS_ROOT)
+VERSION_PATH = os.path.join(SKILLS_ROOT, "VERSION")
 
 
 def _resolve_skill_dir(skill_name: str) -> str | None:
@@ -59,6 +60,12 @@ def _read_text_file(path: str) -> str:
     """Reads a UTF-8 text file and returns its content."""
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
+
+
+try:
+    _APP_VERSION = _read_text_file(VERSION_PATH).strip()
+except OSError:
+    _APP_VERSION = "unknown"
 
 
 def _extract_frontmatter_fields(skill_md_content: str) -> Dict[str, str]:
@@ -193,8 +200,9 @@ def _register_skill_prompts() -> None:
         )
 
         # Use a factory to avoid late binding issues inside loops.
-        def _make_handler(text: str, short_description: str):
+        def _make_handler(text: str, short_description: str, log_label: str):
             def _handler() -> str:
+                _log_event(f"prompt:{log_label}")
                 return text
 
             # The Cursor UI typically reads function docstrings as the short description.
@@ -202,7 +210,7 @@ def _register_skill_prompts() -> None:
             return _handler
 
         short_description = description or heading or f"Use a skill `{skill_dir_name}` via MCP."
-        mcp.prompt(prompt_name)(_make_handler(prompt_text, short_description))
+        mcp.prompt(prompt_name)(_make_handler(prompt_text, short_description, prompt_name))
 
 
 # --- PROMPTS (Atalhos de comando) ---
@@ -225,6 +233,16 @@ _register_skill_prompts()
 #class SkillIdentifier(BaseModel):
 #    skill_name: str = Field(..., description="The directory name of the skill (e.g., 'django-audit')")
 #
+
+@mcp.tool(
+    name="get_app_version",
+    annotations={"readOnlyHint": True},
+)
+async def get_app_version() -> str:
+    """Retorna a versão do aplicativo (fonte única: arquivo `VERSION`)."""
+    _log_event("tool:get_app_version")
+    return _APP_VERSION
+
 
 @mcp.tool(
     name="list_available_skills",
@@ -301,6 +319,7 @@ def skill_instructions(skill_name: str) -> str:
 async def home_page(request: Request) -> HTMLResponse:
     """Public lightweight homepage showing key skills and recent MCP activity."""
     client_host = getattr(getattr(request, "client", None), "host", None) or "unknown"
+    app_version = _APP_VERSION
     skills = _SKILLS_METADATA_CACHE
     total_skills = len(skills)
     last_events = list(_EVENT_LOG)[:12]
@@ -352,6 +371,7 @@ async def home_page(request: Request) -> HTMLResponse:
       <p class="sub">Página pública (leve) para visualizar skills e o log recente do servidor MCP.</p>
       <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
         <span class="pill">{total_skills} skills detectadas</span>
+        <span class="pill">Versão: <code>{html.escape(str(app_version))}</code></span>
         <span class="small">Cliente: {html.escape(str(client_host))}</span>
       </div>
       <div style="margin-top:10px" class="small">
@@ -376,12 +396,24 @@ async def home_page(request: Request) -> HTMLResponse:
         <ul>
           {events_items if events_items else "<li>Sem eventos recentes.</li>"}
         </ul>
-        <div class="small" style="margin-top:10px">
-          Atualiza a cada requisição (página simples para baixo consumo).
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px;">
+          <button
+            type="button"
+            onclick="window.location.reload()"
+            style="cursor:pointer; background:rgba(103,232,249,.14); border:1px solid rgba(103,232,249,.35); color:var(--accent); padding:8px 12px; border-radius:12px; font-weight:600;"
+          >
+            Atualizar agora
+          </button>
+          <span class="small">Auto-atualiza a cada 10s.</span>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    // Página é leve; reload simples a cada 10s reduz complexidade e mantém baixo consumo.
+    setInterval(() => window.location.reload(), 10000);
+  </script>
 </body>
 </html>
 """
