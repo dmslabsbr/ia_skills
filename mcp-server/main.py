@@ -332,7 +332,7 @@ async def home_page(request: Request) -> HTMLResponse:
 
     skills_items = "".join(
         f"<li><code>{html.escape(s['skill_dir_name'])}</code> - {html.escape(_short(s.get('description') or s.get('heading') or '', 120))}</li>"
-        for s in skills[:10]
+        for s in skills
     )
 
     events_items = "".join(f"<li>{html.escape(e)}</li>" for e in last_events)
