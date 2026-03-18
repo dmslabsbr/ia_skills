@@ -1,5 +1,7 @@
 # Skills MCP Server
 
+Read in Portuguese: [README.pt-BR.md](README.pt-BR.md)
+
 This server exposes all skills in the `ia_skills` repository as MCP tools and resources. This allows any MCP-compatible client (like Cursor or Antigravity) to access these skills globally.
 
 ## 🛠️ Tools
