@@ -25,6 +25,7 @@ def _resolve_skill_dir(skill_name: str) -> str | None:
     """
     Resolve skill directory path and ensure it stays inside SKILLS_ROOT (path traversal safe).
     Returns the resolved absolute path if valid, None otherwise.
+    Returns: str | None
     """
     if not skill_name or skill_name.strip() != skill_name:
         return None

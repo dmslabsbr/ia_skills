@@ -1,42 +1,64 @@
 # AI Coding Skills 🚀
 
-![Cursor Skill](https://img.shields.io/badge/Cursor-Skill-00d4aa?style=flat) ![Antigravity](https://img.shields.io/badge/Antigravity-Gemini-blue?style=flat) ![MCP Server](https://img.shields.io/badge/MCP-Server-4285F4?style=flat) ![Python](https://img.shields.io/badge/Python-3.13+-3776AB?style=flat)
+![Cursor Skill](https://img.shields.io/badge/Cursor-Skill-00d4aa?style=flat) ![Antigravity](https://img.shields.io/badge/Antigravity-Gemini-blue?style=flat) ![MCP Server](https://img.shields.io/badge/MCP-Server-4285F4?style=flat) ![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat) ![Version](https://img.shields.io/badge/version-1.0.3-blue?style=flat)
 
 Read in Portuguese: [README.pt-BR.md](README.pt-BR.md)
 
-A curated collection of specialized skills designed to enhance modern AI coding assistants like **Antigravity** and **Cursor**. This repository provides expert-level workflows and a global Model Context Protocol (MCP) server.
+A curated collection of specialized skills for modern AI coding assistants (**Antigravity**, **Cursor**). Includes expert workflows and a global MCP server that exposes all skills via tools and prompts.
 
 ## 📂 Available Skills
 
-- **[📱 Android Expert](./android-expert)**: Best practices for Android development (Java/Kotlin, Material Design, Firebase).
-- **[✅ Code Review Standards](./code-review-standards)**: PEP 8, type hints, Docker, and comprehensive testing reviews.
-- **[🎨 Dashboard Cloner](./dashboard-cloner)**: UI/UX analysis to extract design tokens and layouts.
-- **[🐍 Django Audit](./django-audit)**: Deep technical auditing for Django applications.
-- **[🐙 Git Platforms Expert](./git-platforms-expert)**: Workflow master for GitHub/GitLab and CI/CD.
-- **[🏗️ New App Bootstrap](./new-app-bootstrap)**: Scaffolding for new applications.
-- **[📋 Phase Execution](./phase-execution)**: Structured delivery methodology via five distinct phases.
-- **[🌍 README Bilingual](./readme-bilingual)**: Automated dual-language GitHub documentation.
-- **[📝 Technical Documentation](./technical-documentation)**: Creation of structured `analise.md` and `plano.md`.
-- **[🔄 Update Funcoes.md](./update-funcoes-md)**: Automated function tracking in `funcoes.md`.
+- **[📱 Android Expert](./android-expert)**: Java/Kotlin, Material Design 3, Firebase, Play Store best practices.
+- **[✅ Code Review Standards](./code-review-standards)**: PEP 8, type hints, Docker, tests, and quality checklist.
+- **[📊 ClickUp Group Progress](./clickup-group-progress)**: Track and plan any group/project in ClickUp (generic; user supplies group name).
+- **[📊 ClickUp Nexus Progress](./clickup-nexus-progress)**: Track Nexus development progress and planning in ClickUp.
+- **[🎨 Dashboard Cloner](./dashboard-cloner)**: UI/UX analysis from screenshots; design tokens and implementation briefs.
+- **[🐍 Django Audit](./django-audit)**: Security, architecture, performance, and quality audits for Django apps.
+- **[🐙 Git Platforms Expert](./git-platforms-expert)**: GitHub/GitLab workflows, CI/CD, commits, and cross-platform Git.
+- **[🏗️ New App Bootstrap](./new-app-bootstrap)**: README, VERSION, Docker, ER diagram, tests, and project scaffold.
+- **[📋 Phase Execution](./phase-execution)**: Five-phase delivery (analysis, planning, implementation, validation, delivery).
+- **[🌍 README Bilingual](./readme-bilingual)**: Dual READMEs (EN + pt-BR) with badges and cross-links for GitHub.
+- **[📝 Technical Documentation](./technical-documentation)**: Structured `analise.md` and `plano.md` for technical discussions.
+- **[🔄 Update Funcoes.md](./update-funcoes-md)**: Keep `funcoes.md` in sync when functions are added, changed, or removed.
+
+## 🛠️ MCP Server (skills-mcp)
+
+The server exposes **tools** and **prompts** so any MCP client can use the skills without copying files.
+
+| Type   | Examples |
+|--------|----------|
+| **Tools** | `list_available_skills`, `get_skill_manual`, `get_app_version` |
+| **Prompts** | `usar-<skill>` (e.g. `usar-readme-bilingual`), `analisar-skills-disponiveis` |
+| **Resource** | `skill://{skill_name}/instructions` (SKILL.md content) |
+
+A lightweight **homepage** at `http://<host>:8001/` shows version, skills list, and recent activity log (auto-refresh every 10s).
 
 ## 🚀 Getting Started
 
-You can use these skills in two ways:
+### 1. Global (MCP) – Recommended
 
-### 1. Global (MCP) - Recommended
-Running the included MCP server grants your AI agents instant access to all skills across any project.
+Run the MCP server so your AI assistant can call the skills from any project.
 
-**Run the server:**
-- **Windows (local)**: From the repo root, run `run-server.bat` to start the server with Python (listens on `http://localhost:8001/sse`).
-- **Linux (Docker)**: From the repo root, run `./run-docker.sh` to build and start the container (requires `chmod +x run-docker.sh` once).
+- **Windows (local)**: From repo root, run `run-server.bat` (server listens on `http://localhost:8001/sse`).
+- **Linux / macOS (Docker)**: From repo root, run `./run-docker.sh` (once: `chmod +x run-docker.sh`).
 
 **Configure your client:**
-- **Setup Antigravity**: [English](./mcp-server/antigravity_setup.md) | [Português](./mcp-server/antigravity_setup.pt-BR.md)
-- **Setup Cursor**: [English](./mcp-server/cursor_setup.md) | [Português](./mcp-server/cursor_setup.pt-BR.md)
+
+- **Antigravity**: [English](./mcp-server/antigravity_setup.md) \| [Português](./mcp-server/antigravity_setup.pt-BR.md)
+- **Cursor**: [English](./mcp-server/cursor_setup.md) \| [Português](./mcp-server/cursor_setup.pt-BR.md)
 
 ### 2. Local (Copy/Paste)
-If you prefer adding skills individually per project:
-- **Folders**: Copy the skill folder into `.agents/skills/` (for Antigravity).
-- **Rules**: Copy content into `.cursorrules` (for Cursor).
 
-For more details on the server implementation and run options, check the [MCP Server README](./mcp-server/README.md).
+- Copy a skill folder into `.agents/skills/` (Antigravity) or reference in `.cursorrules` (Cursor).
+
+For server details and run options, see [MCP Server README](./mcp-server/README.md).
+
+## 📷 Screenshots
+
+| Dashboard (homepage) | MCP servers in Cursor |
+|----------------------|------------------------|
+| ![Skills MCP homepage](images/Dashboard_mcp_server.JPG) | ![Cursor MCP servers](images/Cursor_instaled_mcp_servers.JPG) |
+
+## License
+
+[MIT](LICENSE)
