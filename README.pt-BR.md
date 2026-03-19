@@ -59,6 +59,17 @@ Para detalhes do servidor e opções de execução, veja [README do mcp-server](
 |----------------------|--------------------------|
 | ![Homepage Skills MCP](images/Dashboard_mcp_server.JPG) | ![Servidores MCP no Cursor](images/Cursor_instaled_mcp_servers.JPG) |
 
+| Uso de um prompt de skill (ex.: readme-bilingual) |
+|----------------------------------------------------|
+| ![Uso de um prompt de skill no chat](images/skill_use_example.JPG) |
+
+## ☕ Apoie o projeto
+
+Se este projeto te ajuda, considere apoiar o desenvolvimento:
+
+- **[Buy Me a Coffee](https://buymeacoffee.com/dmslabs)**
+- **Bitcoin (BTC)**: [1MAC9RBnPYT9ua1zsgvhwfRoASTBKr4QL8](https://www.blockchain.com/btc/address/1MAC9RBnPYT9ua1zsgvhwfRoASTBKr4QL8)
+
 ## Licença
 
 [MIT](LICENSE)
